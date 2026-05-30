@@ -1,0 +1,8 @@
+venv/
+env/
+.venv/
+.idea/
+__pycache__/
+*.pyc
+.git
+.mypy_cache/
