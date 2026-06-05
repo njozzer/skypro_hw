@@ -4,6 +4,10 @@ import masks
 
 
 def mask_account_card(card: str) -> str:
+    """
+    Функция mask_account_card, которая принимает аккаунт, или
+    номер карты, и возвращает ее замаскированное значение.
+    """
     if not card:
         return "!Ошибка: пустая строка"
     if not isinstance(card, str):
@@ -36,6 +40,12 @@ def mask_account_card(card: str) -> str:
 
 
 def get_date(date: str) -> str:
+    """
+    Функция get_date, которая принимает дату в формате
+    iso строки.
+    Функция возвращает дату в формате дд.мм.гггг
+    (д - день, м - месяц, г - год).
+    """
     curr_date = datetime.fromisoformat(date)
     return curr_date.strftime("%d.%m.%Y")
 
