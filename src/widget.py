@@ -23,11 +23,13 @@ def mask_account_card(card: str) -> str:
         return "!Ошибка: не найдено цифр"
     if letter_str == "Счет":
         if len(digit_str) != 20:
-            return f"!Ошибка: номер счета должен содержать 20 цифр (получено {len(digit_str)})"
+            return f"!Ошибка: номер счета должен содержать " \
+                   f"20 цифр (получено {len(digit_str)})"
         return f"{letter_str} {masks.get_mask_account(digit_str)}"
     else:
         if len(digit_str) != 16:
-            return f"!Ошибка: номер карты содержит {len(digit_str)} цифр (ожидается 16)"
+            return f"!Ошибка: номер карты содержит " \
+                   f"{len(digit_str)} цифр (ожидается 16)"
         if len(letter_str) < 2:
             return "!Ошибка: слишком короткое имя карты"
         return f"{letter_str} {masks.get_mask_card_number(digit_str)}"
