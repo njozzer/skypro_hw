@@ -4,6 +4,10 @@ import masks
 
 
 def mask_account_card(card: str) -> str:
+    """
+    Функция mask_account_card, которая принимает аккаунт, или
+    номер карты, и возвращает ее замаскированное значение.
+    """
     if not card:
         return "!Ошибка: пустая строка"
     if not isinstance(card, str):
@@ -23,17 +27,23 @@ def mask_account_card(card: str) -> str:
         return "!Ошибка: не найдено цифр"
     if letter_str == "Счет":
         if len(digit_str) != 20:
-            return f"!Ошибка: номер счета должен содержать 20 цифр (получено {len(digit_str)})"
+            return f"!Ошибка: номер счета должен содержать " f"20 цифр (получено {len(digit_str)})"
         return f"{letter_str} {masks.get_mask_account(digit_str)}"
     else:
         if len(digit_str) != 16:
-            return f"!Ошибка: номер карты содержит {len(digit_str)} цифр (ожидается 16)"
+            return f"!Ошибка: номер карты содержит " f"{len(digit_str)} цифр (ожидается 16)"
         if len(letter_str) < 2:
             return "!Ошибка: слишком короткое имя карты"
         return f"{letter_str} {masks.get_mask_card_number(digit_str)}"
 
 
 def get_date(date: str) -> str:
+    """
+    Функция get_date, которая принимает дату в формате
+    iso строки.
+    Функция возвращает дату в формате дд.мм.гггг
+    (д - день, м - месяц, г - год).
+    """
     curr_date = datetime.fromisoformat(date)
     return curr_date.strftime("%d.%m.%Y")
 
