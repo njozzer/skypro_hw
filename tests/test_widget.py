@@ -1,3 +1,5 @@
+from datetime import datetime
+
 import pytest
 
 from src import widget
@@ -30,7 +32,13 @@ def test_mask_account_card_fixture_2(widget_mask_account_card_data_2: str) -> No
 
 @pytest.mark.parametrize(
     "date, expected",
-    [("2024-03-11T02:26:18.671407", "11.03.2024")],
+    [
+        ("2024-03-11T02:26:18.671407", "11.03.2024"),
+        ("2024-03-11T02", "11.03.2024"),
+        ("", datetime.today().strftime("%d.%m.%Y")),
+        ("2026-06-06 21:10:00", "06.06.2026"),
+        ("06.06.2026", "06.06.2026"),
+    ],
 )
 def test_get_date(date: str, expected: str) -> None:
     assert widget.get_date(date) == expected

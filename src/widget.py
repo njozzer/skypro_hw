@@ -46,9 +46,15 @@ def get_date(date: str) -> str:
     """
     if not isinstance(date, str):
         raise TypeError(f"!Ожидалась строка, получен {type(date).__name__}")
+    if date == "":
+        return datetime.today().strftime("%d.%m.%Y")
+    try:
+        curr_date = datetime.fromisoformat(date)
+    except ValueError:
+        pass
+    finally:
+        return datetime.strptime(date,"%m/%d/%Y").strftime("%d.%m.%Y")
 
-    curr_date = datetime.fromisoformat(date)
-    return curr_date.strftime("%d.%m.%Y")
 
 
 if __name__ == "__main__":
