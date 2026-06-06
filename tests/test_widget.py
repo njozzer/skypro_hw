@@ -36,5 +36,5 @@ def test_get_date(date: str, expected: str) -> None:
     assert widget.get_date(date) == expected
 
 
-def test_get_date_fixture(widget_mask_account_card_data) -> None:
-    assert widget.mask_account_card(widget_mask_account_card_data) == "Maestro 1596 83** **** 5199"
+def test_get_date_fixture(widget_get_date_data) -> None:
+    assert widget.get_date(widget_get_date_data) == "11.03.2024"
