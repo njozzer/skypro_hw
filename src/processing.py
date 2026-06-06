@@ -21,7 +21,3 @@ def sort_by_date(list_to_sort: list, descending: bool = True) -> list:
     """
 
     return sorted(list_to_sort, key=lambda x: x["date"], reverse=descending)
-
-
-if __name__ == "__main__":
-    pass

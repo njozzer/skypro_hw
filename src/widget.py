@@ -9,6 +9,7 @@ def mask_account_card(card: str) -> str:
     номер карты, и возвращает ее замаскированное значение.
     """
     if not card:
+
         raise ValueError("!Ошибка: пустая строка")
     if not isinstance(card, str):
         raise TypeError(f"!Ожидалась строка, получен {type(card).__name__}")
@@ -46,18 +47,8 @@ def get_date(date: str) -> str:
     """
     if not isinstance(date, str):
         raise TypeError(f"!Ожидалась строка, получен {type(date).__name__}")
-    if date == "":
-        return datetime.today().strftime("%d.%m.%Y")
     try:
         curr_date = datetime.fromisoformat(date)
+        return curr_date.strftime("%d.%m.%Y")
     except ValueError:
-        pass
-    finally:
-        return datetime.strptime(date,"%m/%d/%Y").strftime("%d.%m.%Y")
-
-
-
-if __name__ == "__main__":
-    print(mask_account_card("Visa Platinum 7000792289606361"))
-    print(mask_account_card("Счет 73654108430135874305"))
-    print(get_date("2024-03-11T02:26:18.671407"))
+        raise ValueError

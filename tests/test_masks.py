@@ -16,6 +16,16 @@ def test_get_mask_card_number(card: str, expected: str) -> None:
     assert masks.get_mask_card_number(card) == expected
 
 
+def test_get_mask_card_number_bad_card() -> None:
+    with pytest.raises(TypeError):
+        masks.get_mask_card_number(1)  # type: ignore[arg-type]
+
+
+def test_get_mask_card_number_bad_card_2() -> None:
+    with pytest.raises(ValueError):
+        masks.get_mask_card_number("15968378687051")
+
+
 @pytest.mark.parametrize(
     "account, expected",
     [
@@ -26,3 +36,8 @@ def test_get_mask_card_number(card: str, expected: str) -> None:
 )
 def test_get_mask_account(account: str, expected: str) -> None:
     assert masks.get_mask_account(account) == expected
+
+
+def test_get_mask_account_bad_account() -> None:
+    with pytest.raises(TypeError):
+        masks.get_mask_account(1)  # type: ignore[arg-type]
