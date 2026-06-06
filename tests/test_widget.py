@@ -20,11 +20,11 @@ def test_mask_account_card(card: str, expected: str) -> None:
     assert widget.mask_account_card(card) == expected
 
 
-def test_mask_account_card_fixture(widget_mask_account_card_data) -> None:
+def test_mask_account_card_fixture(widget_mask_account_card_data: str) -> None:
     assert widget.mask_account_card(widget_mask_account_card_data) == "Maestro 1596 83** **** 5199"
 
 
-def test_mask_account_card_fixture_2(widget_mask_account_card_data_2) -> None:
+def test_mask_account_card_fixture_2(widget_mask_account_card_data_2: str) -> None:
     assert widget.mask_account_card(widget_mask_account_card_data_2) == "Счет **9589"
 
 
@@ -36,5 +36,5 @@ def test_get_date(date: str, expected: str) -> None:
     assert widget.get_date(date) == expected
 
 
-def test_get_date_fixture(widget_get_date_data) -> None:
+def test_get_date_fixture(widget_get_date_data: str) -> None:
     assert widget.get_date(widget_get_date_data) == "11.03.2024"
