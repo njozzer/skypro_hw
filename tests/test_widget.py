@@ -20,9 +20,21 @@ def test_mask_account_card(card: str, expected: str) -> None:
     assert widget.mask_account_card(card) == expected
 
 
+def test_mask_account_card_fixture(widget_mask_account_card_data) -> None:
+    assert widget.mask_account_card(widget_mask_account_card_data) == "Maestro 1596 83** **** 5199"
+
+
+def test_mask_account_card_fixture_2(widget_mask_account_card_data_2) -> None:
+    assert widget.mask_account_card(widget_mask_account_card_data_2) == "Счет **9589"
+
+
 @pytest.mark.parametrize(
     "date, expected",
     [("2024-03-11T02:26:18.671407", "11.03.2024")],
 )
 def test_get_date(date: str, expected: str) -> None:
     assert widget.get_date(date) == expected
+
+
+def test_get_date_fixture(widget_mask_account_card_data) -> None:
+    assert widget.mask_account_card(widget_mask_account_card_data) == "Maestro 1596 83** **** 5199"

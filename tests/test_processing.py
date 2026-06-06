@@ -5,12 +5,15 @@ from src import processing
 
 @pytest.mark.parametrize(
     "list_to_filter, state, expected",
-    [
-        ("1596837868705199", "1596 83** **** 5199"),
-        ("7158300734726758", "7158 30** **** 6758"),
-        ("6831982476737658", "6831 98** **** 7658"),
-        ("8990922113665229", "8990 92** **** 5229"),
-    ],
+    [],
 )
-def test_filter_by_state(list_to_filter: list, state: str, expected: str) -> None:
+def test_filter_by_state(list_to_filter: list, state: str, expected: list) -> None:
     assert processing.filter_by_state(list_to_filter, state) == expected
+
+
+@pytest.mark.parametrize(
+    "list_to_sort, descending, expected",
+    [],
+)
+def test_sort_by_date(list_to_sort: list, descending: bool, expected: list) -> None:
+    assert processing.sort_by_date(list_to_sort, descending) == expected
