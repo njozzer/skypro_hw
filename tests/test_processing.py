@@ -1,5 +1,6 @@
-from src import processing
 import pytest
+
+from src import processing
 
 
 @pytest.mark.parametrize(

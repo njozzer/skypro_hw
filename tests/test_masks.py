@@ -1,5 +1,6 @@
-from src import masks
 import pytest
+
+from src import masks
 
 
 @pytest.mark.parametrize(

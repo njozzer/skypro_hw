@@ -1,5 +1,6 @@
-from src import widget
 import pytest
+
+from src import widget
 
 
 @pytest.mark.parametrize(
