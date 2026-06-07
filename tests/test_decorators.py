@@ -31,7 +31,7 @@ def test_decorators_2() -> None:
     def test_func(x: float, y: float) -> float:
         return x / y
 
-    test_func(12.0, 3.0)
+    assert test_func(12.0, 3.0) == 4.0
 
 
 def test_decorators_3() -> None:
@@ -40,3 +40,4 @@ def test_decorators_3() -> None:
         return x / y
 
     test_func(12.0, 3.0)
+    assert test_func(12.0, 3.0) == 4.0

@@ -1,9 +1,14 @@
 from functools import wraps
-
 from typing import Any, Callable
 
 
 def log(filename: str | None = None) -> Callable[..., Callable[..., Any]]:
+    """
+
+    :param filename: опциональный аргумент - название файла, в который записываются данные
+    :return:
+    """
+
     def wrapper(func: Callable[..., Any]) -> Callable[..., Callable[..., Any]]:
         @wraps(func)
         def inner(*args: Any, **kwargs: Any) -> Any:
