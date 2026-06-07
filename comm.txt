@@ -1,0 +1,10 @@
+black tests/
+flake8 tests/
+mypy tests/
+isort tests/
+black src/ tests/
+flake8 src/ tests/
+mypy src/ tests/
+isort src/ tests/
+python -m pytest
+python -m pytest --cov=src --cov-report=html
