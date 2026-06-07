@@ -1,11 +1,16 @@
 from datetime import datetime
 
-import masks
+from src import masks
 
 
 def mask_account_card(card: str) -> str:
+    """
+    Функция mask_account_card, которая принимает аккаунт, или
+    номер карты, и возвращает ее замаскированное значение.
+    """
     if not card:
-        return "!Ошибка: пустая строка"
+
+        raise ValueError("!Ошибка: пустая строка")
     if not isinstance(card, str):
         raise TypeError(f"!Ожидалась строка, получен {type(card).__name__}")
     letter_arr: list[str] = []
@@ -17,28 +22,33 @@ def mask_account_card(card: str) -> str:
             digit_arr.append(char)
     letter_str = "".join(letter_arr).strip()
     if not letter_str:
-        return "!Ошибка: не найдено букв"
+        raise ValueError("!Ошибка: не найдено букв")
     digit_str = "".join(digit_arr)
     if not digit_str:
-        return "!Ошибка: не найдено цифр"
+        raise ValueError("!Ошибка: не найдено цифр")
     if letter_str == "Счет":
         if len(digit_str) != 20:
-            return f"!Ошибка: номер счета должен содержать 20 цифр (получено {len(digit_str)})"
+            raise ValueError(f"!Ошибка: номер счета должен содержать " f"20 цифр (получено {len(digit_str)})")
         return f"{letter_str} {masks.get_mask_account(digit_str)}"
     else:
         if len(digit_str) != 16:
-            return f"!Ошибка: номер карты содержит {len(digit_str)} цифр (ожидается 16)"
+            raise ValueError(f"!Ошибка: номер карты содержит " f"{len(digit_str)} цифр (ожидается 16)")
         if len(letter_str) < 2:
-            return "!Ошибка: слишком короткое имя карты"
+            raise ValueError("!Ошибка: слишком короткое имя карты")
         return f"{letter_str} {masks.get_mask_card_number(digit_str)}"
 
 
 def get_date(date: str) -> str:
-    curr_date = datetime.fromisoformat(date)
-    return curr_date.strftime("%d.%m.%Y")
-
-
-if __name__ == "__main__":
-    print(mask_account_card("Visa Platinum 7000792289606361"))
-    print(mask_account_card("Счет 73654108430135874305"))
-    print(get_date("2024-03-11T02:26:18.671407"))
+    """
+    Функция get_date, которая принимает дату в формате
+    iso строки.
+    Функция возвращает дату в формате дд.мм.гггг
+    (д - день, м - месяц, г - год).
+    """
+    if not isinstance(date, str):
+        raise TypeError(f"!Ожидалась строка, получен {type(date).__name__}")
+    try:
+        curr_date = datetime.fromisoformat(date)
+        return curr_date.strftime("%d.%m.%Y")
+    except ValueError:
+        raise ValueError
