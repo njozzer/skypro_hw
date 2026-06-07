@@ -27,7 +27,7 @@ def test_decorators_1() -> None:
 
 
 def test_decorators_2() -> None:
-    @decorators.log(filename="logger.txt")
+    @decorators.log(filename="logger2.txt")
     def test_func(x: float, y: float) -> float:
         return x / y
 
