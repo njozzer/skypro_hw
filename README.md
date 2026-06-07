@@ -35,5 +35,25 @@ pip install -r requirements.txt
 ```
 poetry install
 ```
-
-   
+### **Модули:**
+```
+src/generators
+```
+```
+src/masks
+```
+```
+src/processing
+```
+```
+src/widget
+```
+### **Тестирование:**
+Протестировать модули можно через команды:
+```
+python -m pytest
+```
+или
+```
+python -m pytest --cov=src --cov-report=html
+```
