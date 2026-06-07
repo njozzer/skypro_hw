@@ -184,7 +184,6 @@ def test_card_number_generator_bad_example_1() -> None:
         list(generators.card_number_generator(-1, 12))
 
 
-
 def test_card_number_generator_bad_example_3() -> None:
     with pytest.raises(OverflowError):
         list(generators.card_number_generator(2, 99999999999999990))
