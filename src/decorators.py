@@ -4,7 +4,7 @@ from typing import Any, Callable
 
 def log(filename: str | None = None) -> Callable[..., Callable[..., Any]]:
     """
-
+    Функция - декоратор, выводит в консоль данные о функции
     :param filename: опциональный аргумент - название файла, в который записываются данные
     :return:
     """
