@@ -7,3 +7,4 @@ __pycache__/
 .git
 .mypy_cache/
 comm.txt
+logger.txt
