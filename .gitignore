@@ -6,3 +6,7 @@ __pycache__/
 *.pyc
 .git
 .mypy_cache/
+comm.txt
+logger.txt
+.env
+logs/
