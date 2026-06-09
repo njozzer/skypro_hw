@@ -17,10 +17,8 @@ def get_mask_card_number(card_number: str) -> str:
     try:
         if not isinstance(card_number, str):
             logger.error(f"!Ожидалась строка, получен {type(card_number).__name__}")
-            raise TypeError(f"!Ожидалась строка, получен {type(card_number).__name__}")
         if not len(card_number) == 16:
             logger.error("Ожидалось 16 цифр в номере карты")
-            raise ValueError("Ожидалось 16 цифр в номере карты")
         masked_number = f"{card_number[0:4]} {card_number[4:6]}** **** {card_number[-4:]}"
         logger.info(f"Успешно замаскирован номер карты: {masked_number}")
         return masked_number
@@ -34,10 +32,10 @@ def get_mask_account(account: str) -> str:
     Функция get_mask_account получает номер аккаунта,
      и возвращает замаскированный номер.
     """
+    logger.info(f"Вызвана get_mask_account с номером {account}")
     try:
         if not isinstance(account, str):
             logger.error(f"!Ожидалась строка, получен {type(account).__name__}")
-            raise TypeError(f"!Ожидалась строка, получен {type(account).__name__}")
         masked_account = f"**{account[-4:]}"
         logger.info(f"Успешно замаскирован аккаунт: {masked_account}")
         return masked_account

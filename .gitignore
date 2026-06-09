@@ -9,3 +9,4 @@ __pycache__/
 comm.txt
 logger.txt
 .env
+logs/
