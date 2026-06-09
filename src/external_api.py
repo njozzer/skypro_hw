@@ -28,7 +28,7 @@ def transaction_convert_currency(transaction: dict) -> float:
 
             response = requests.get(exchange_url, headers=headers, params=params, timeout=10)
             if response.status_code != 200:
-                return amount
+                return 0.0
             else:
                 response_data = response.json()
                 print(response_data)
@@ -37,18 +37,5 @@ def transaction_convert_currency(transaction: dict) -> float:
                     return 0.0
                 return float(round(amount * rub_rate, 2))
         except (requests.RequestException, KeyError, ValueError):
-            return amount
-    return amount
-
-
-if __name__ == "__main__":
-    print(
-        transaction_convert_currency(
-            {
-                "id": 41428829,
-                "state": "EXECUTED",
-                "date": "2019-07-03T18:35:29.512364",
-                "operationAmount": {"amount": "8221.37", "currency": {"name": "EUR", "code": "EUR"}},
-            }
-        )
-    )
+            return 0.0
+    return 0.0
