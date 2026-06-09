@@ -16,15 +16,15 @@ def json_read_from_file(filename: str) -> Any:
     :param filename: получает название файла
     :return: возвращает словари
     """
-    if filename is None:
-        return []
+    logger.info(f"Вызвана json_read_from_file с файлом {filename}")
     try:
+        if filename is None:
+            logger.error(f"!Ожидалась строка, получен {type(filename).__name__}")
+            return []
         with open(filename, "r", encoding="utf-8") as f:
             data = json.load(f)
+            logger.info(f"Успешно считано из файла {filename}")
             return data
-    except FileNotFoundError:
-        print("Error: The file does not exist.")
-        return []
-    except json.JSONDecodeError:
-        print("Error: The file contains invalid JSON syntax.")
-        return []
+    except Exception as e:
+        logger.error(f"Непредвиденная ошибка в json_read_from_file: {e}", exc_info=True)
+    return []

@@ -13,18 +13,20 @@ def get_mask_card_number(card_number: str) -> str:
     Функция get_mask_card_number получает номер карты,
      и возвращает замаскированный номер.
     """
-    logger.info(f"Вызвана get_mask_card_number с номером {card_number}")
+    logger.info(f"Вызвана get_mask_card_number с номером карты {card_number}")
     try:
         if not isinstance(card_number, str):
             logger.error(f"!Ожидалась строка, получен {type(card_number).__name__}")
+            raise TypeError
         if not len(card_number) == 16:
             logger.error("Ожидалось 16 цифр в номере карты")
+            raise ValueError
         masked_number = f"{card_number[0:4]} {card_number[4:6]}** **** {card_number[-4:]}"
         logger.info(f"Успешно замаскирован номер карты: {masked_number}")
         return masked_number
     except Exception as e:
         logger.error(f"Непредвиденная ошибка в get_mask_card_number: {e}", exc_info=True)
-    return ""
+        raise e
 
 
 def get_mask_account(account: str) -> str:
@@ -32,13 +34,14 @@ def get_mask_account(account: str) -> str:
     Функция get_mask_account получает номер аккаунта,
      и возвращает замаскированный номер.
     """
-    logger.info(f"Вызвана get_mask_account с номером {account}")
+    logger.info(f"Вызвана get_mask_account с аккаунтом {account}")
     try:
         if not isinstance(account, str):
             logger.error(f"!Ожидалась строка, получен {type(account).__name__}")
+            raise TypeError
         masked_account = f"**{account[-4:]}"
         logger.info(f"Успешно замаскирован аккаунт: {masked_account}")
         return masked_account
     except Exception as e:
         logger.error(f"Непредвиденная ошибка в get_mask_account: {e}", exc_info=True)
-    return ""
+        raise e
