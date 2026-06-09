@@ -8,7 +8,11 @@ API_KEY = os.getenv("API_KEY")
 
 
 def transaction_convert_currency(transaction: dict) -> float:
-
+    """
+    Конвертирует в рубли
+    :param transaction: получает словарь с транзакцией
+    :return: возвращает сумму в рублях
+    """
     operation_amount = transaction.get("operationAmount", {})
     amount_str = operation_amount.get("amount")
     currency_dict = operation_amount.get("currency", {})

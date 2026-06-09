@@ -3,6 +3,11 @@ from typing import Any
 
 
 def json_read_from_file(filename: str) -> Any:
+    """
+    Считывает json файл
+    :param filename: получает название файла
+    :return: возвращает словари
+    """
     if filename is None:
         return []
     try:
