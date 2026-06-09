@@ -10,3 +10,4 @@ comm.txt
 logger.txt
 .env
 logs/
+data/
