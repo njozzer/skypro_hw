@@ -1,7 +1,8 @@
 import json
+from typing import Any
 
 
-def json_read_from_file(filename: str) -> list[dict]:
+def json_read_from_file(filename: str) -> Any:
     if filename is None:
         return []
     try:
@@ -14,8 +15,3 @@ def json_read_from_file(filename: str) -> list[dict]:
     except json.JSONDecodeError:
         print("Error: The file contains invalid JSON syntax.")
         return []
-
-
-
-if __name__ == "__main__":
-    print(json_read_from_file("./data/test.json"))
