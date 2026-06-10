@@ -22,6 +22,7 @@ def csv_read(file_path: str) -> list[dict]:
 def excel_read(file_path: str) -> list[dict]:
     """
     Считывает данные из excel файла
+    :rtype: list[dict]
     :param file_path: название файла
     :return: список транзакций
     """
