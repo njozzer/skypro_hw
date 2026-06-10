@@ -23,4 +23,4 @@ def process_bank_operations(data: list[dict], categories: list) -> dict:
     :return:
     """
     counts = Counter(op.get("description") for op in data)
-    return {category: counts[categories] for category in categories}
+    return {category: counts[category] for category in categories}
