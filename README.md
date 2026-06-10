@@ -1,7 +1,71 @@
-python -m venv .venv \
-.venv\Scripts\activate \
-poetry add --group lint flake8 black isort mypy \
-flake8 src/
-black src/  
-isort src/  
-mypy src/        
+# Проект Домашнее задание
+
+## Описание:
+
+Проект X - это веб-приложение на Python для управления задачами и проектами.
+
+### **Установка:**
+
+1. **Клонируйте проект** с этого репозитория, используя в PyCharm (в командной строке терминала) команду:
+```
+git clone https://github.com/njozzer/skypro_hw.git
+```
+2. **Инициализируйте виртуальное окружение** командой:
+```
+python -m venv <название_окружения>
+```
+*Например:*
+```
+python -m venv venv
+```
+3. **Активируйте окружение** с помощью команды:
+*   на macOS и Linux:
+```
+source venv/bin/activate
+```
+*   на Windows:
+```
+venv\Scripts\activate
+```
+4. **Установите все зависимости проекта** (указанные в файле `requirements.txt`) командой:
+```
+pip install -r requirements.txt
+```
+4. **Установите линтеры**:
+```
+poetry install
+```
+### **Модули:**
+```
+src/generators
+```
+```
+src/masks
+```
+```
+src/processing
+```
+```
+src/widget
+```
+```
+src/decorators
+```
+```
+src/reader
+```
+```
+src/utils
+```
+```
+src/external_api
+```
+### **Тестирование:**
+Протестировать модули можно через команды:
+```
+python -m pytest
+```
+или
+```
+python -m pytest --cov=src --cov-report=html
+```
