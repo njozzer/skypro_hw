@@ -51,6 +51,15 @@ src/widget
 ```
 src/decorators
 ```
+```
+src/reader
+```
+```
+src/utils
+```
+```
+src/external_api
+```
 ### **Тестирование:**
 Протестировать модули можно через команды:
 ```
