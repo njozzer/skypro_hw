@@ -1,7 +1,7 @@
 from pathlib import Path
 from typing import Any, Dict, List, Optional
 
-from src import reader, utils
+from src import reader, utils, get_date, filter_by_state
 from src.bank_operations import process_bank_operations, process_bank_search
 
 DATA_DIR: Path = Path(__file__).resolve().parent / "data"
@@ -68,20 +68,33 @@ def get_valid_status(available_statuses: list[str]) -> Optional[str]:
         else:
             print(f'Статус операции "{user_input}" недоступен.')
 
+
 def display_format_transaction(transaction:dict) -> str:
     """
     Форматирует транзакцию для вывода на экран
-    :param transaction:
-    :return:
+    :param transaction: транзакция
+    :return: строка
     """
-    pass
+    date = transaction.get("date", "")
+    date_formatted = get_date(date) if date else "Неуказано"
+    description = transaction.get("description")
+
+    result = f"{date_formatted} {description}\n"
+
+    return result
 def display_transactions(transactions: list[dict]) -> None:
     """
     Выводит список отформатированных транзакций
     :param transactions:
     :return:
     """
-    pass
+    print(f"\nВсего банковских операций в выборке: {len(transactions)}\n")
+    for i, transaction in enumerate(transactions):
+        print(display_format_transaction(transaction))
+        if i + 1 < len(transactions):
+            print("\n",end="")
+
+
 def main() -> None:
     """
     Основная логика
@@ -100,6 +113,17 @@ def main() -> None:
     selected_file = file_type_map[user_choice]
 
     print(f"Для обработки выбран: {selected_file.upper()}-файл")
+
+    transactions = read_transactions_wrap(selected_file)
+    if not transactions:
+        print("Не удалось загрузить транзакции. Проверьте наличие и структуру файла.")
+        return
+
+    status = get_valid_status(["EXECUTED", "CANCELED", "PENDING"])
+    if status is not None:
+        print(f'Операции отфильтрованы по статусу "{status}"')
+        transactions = filter_by_state(transactions, status)
+    if get_user_choice("\nОтсортировать операции по дате? Да/Нет: ", ["да", "нет"]) == "да":
 
 
 if __name__ == "__main__":

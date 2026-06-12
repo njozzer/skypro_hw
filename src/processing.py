@@ -8,7 +8,7 @@ def filter_by_state(list_to_filter: list, state: str = "EXECUTED") -> list:
     значению переменной state.
     """
 
-    filtered_list = [item for item in list_to_filter if item["state"] == state]
+    filtered_list = [item for item in list_to_filter if item.get("state") == state]
     return filtered_list
 
 
@@ -20,4 +20,13 @@ def sort_by_date(list_to_sort: list, descending: bool = True) -> list:
     Функция возвращает отсортированный список по дате.
     """
 
-    return sorted(list_to_sort, key=lambda x: x["date"], reverse=descending)
+    return sorted(list_to_sort, key=lambda x: x.get("date"), reverse=descending)
+
+def filter_by_currency(list_to_filter: list[dict]) -> list[dict]:
+    """
+    Фильтрация по транзакциям с рублями
+    :param list_to_filter:
+    :return:
+    """
+    filtered_list = [item for item in list_to_filter if item.get("currency_code") == "RUB"]
+    return filtered_list
