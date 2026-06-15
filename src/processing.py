@@ -22,11 +22,13 @@ def sort_by_date(list_to_sort: list, descending: bool = True) -> list:
 
     return sorted(list_to_sort, key=lambda x: x.get("date"), reverse=descending)
 
-def filter_by_currency(list_to_filter: list[dict]) -> list[dict]:
+
+def filter_by_currency(list_to_filter: list[dict], currency: str = "RUB") -> list[dict]:
     """
     Фильтрация по транзакциям с рублями
+    :param currency:
     :param list_to_filter:
     :return:
     """
-    filtered_list = [item for item in list_to_filter if item.get("currency_code") == "RUB"]
+    filtered_list = [item for item in list_to_filter if item.get("currency_code") == currency]
     return filtered_list

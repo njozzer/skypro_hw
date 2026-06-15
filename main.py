@@ -1,7 +1,7 @@
 from pathlib import Path
-from typing import Any, Dict, List, Optional
+from typing import Optional
 
-from src import reader, utils, get_date, filter_by_state
+from src import filter_by_state, generators, get_date, mask_account_card, processing, reader, sort_by_date, utils
 from src.bank_operations import process_bank_operations, process_bank_search
 
 DATA_DIR: Path = Path(__file__).resolve().parent / "data"
@@ -69,7 +69,44 @@ def get_valid_status(available_statuses: list[str]) -> Optional[str]:
             print(f'Статус операции "{user_input}" недоступен.')
 
 
-def display_format_transaction(transaction:dict) -> str:
+def format_amount(transaction: dict) -> str:
+    amount_data = transaction.get("operationAmount", {})
+    if isinstance(amount_data, dict):
+        amount = amount_data.get("amount", "0")
+        currency_data = amount_data.get("currency", {})
+        currency = (
+            currency_data.get("name", currency_data.get("code", "RUB"))
+            if isinstance(currency_data, dict)
+            else str(currency_data)
+        )
+    else:
+        amount = transaction.get("amount", "0")
+        currency = transaction.get("currency_code", "RUB")
+
+    currency_display_map = {
+        "AFN": "Afghani",
+        "ALL": "Lek",
+        "AMD": "Dram",
+        "AOA": "Kwanza",
+        "ARS": "Guilder",
+        "AUD": "Dollar",
+        "AZN": "Manat",
+        "ANG": "Peso",
+        "BAM": "Dollar",
+        "BBD": "Peso",
+        "BGN": "Lev",
+        "RUB": "руб.",
+        "USD": "USD",
+        "EUR": "EUR",
+        "GBP": "GBP",
+        "CNY": "Yuan",
+        "COP": "Peso",
+        "PEN": "Sol",
+    }
+    return f"{amount} {currency_display_map.get(str(currency).upper(),currency)}"
+
+
+def display_format_transaction(transaction: dict) -> str:
     """
     Форматирует транзакцию для вывода на экран
     :param transaction: транзакция
@@ -81,7 +118,18 @@ def display_format_transaction(transaction:dict) -> str:
 
     result = f"{date_formatted} {description}\n"
 
+    list_account = []
+    if transaction.get("from"):
+        list_account.append(mask_account_card(str(transaction["from"])))
+    if transaction.get("to"):
+        list_account.append(mask_account_card(str(transaction["to"])))
+
+    if list_account:
+        result += " -> ".join(list_account) + "\n"
+    result += f"Сумма: {format_amount(transaction)}"
     return result
+
+
 def display_transactions(transactions: list[dict]) -> None:
     """
     Выводит список отформатированных транзакций
@@ -92,7 +140,17 @@ def display_transactions(transactions: list[dict]) -> None:
     for i, transaction in enumerate(transactions):
         print(display_format_transaction(transaction))
         if i + 1 < len(transactions):
-            print("\n",end="")
+            print("\n", end="")
+
+
+def filter_transactions_by_currency(transactions: list[dict], file_type: str) -> list[dict]:
+
+    if file_type == "json":
+        filtered_transactions = [item for item in generators.filter_by_currency(transactions, currency="RUB")]
+        return filtered_transactions
+    else:
+        filtered_transactions = processing.filter_by_currency(transactions, currency="RUB")
+        return filtered_transactions
 
 
 def main() -> None:
@@ -100,6 +158,7 @@ def main() -> None:
     Основная логика
     :return:
     """
+    # Выбор файла для чтения
     prompt_message = (
         "Программа: Привет! Добро пожаловать в программу работы с банковскими транзакциями.\n"
         "Выберите необходимый пункт меню:\n"
@@ -118,12 +177,37 @@ def main() -> None:
     if not transactions:
         print("Не удалось загрузить транзакции. Проверьте наличие и структуру файла.")
         return
-
+    # Сортировка по статусу
     status = get_valid_status(["EXECUTED", "CANCELED", "PENDING"])
     if status is not None:
         print(f'Операции отфильтрованы по статусу "{status}"')
         transactions = filter_by_state(transactions, status)
+
+    # Сортировка по дате
     if get_user_choice("\nОтсортировать операции по дате? Да/Нет: ", ["да", "нет"]) == "да":
+        sort_order = get_user_choice(
+            "Отсортировать по возрастанию или по убыванию? ", ["по возрастанию", "по убыванию"]
+        )
+        sort_order_bool = True if sort_order == "по убыванию" else False
+        transactions = sort_by_date(transactions, descending=sort_order_bool)
+    # Фильтрация по рублям
+    if get_user_choice("\nВыводить только рублевые транзакции? Да/Нет: ", ["да", "нет"]) == "да":
+        transactions = filter_transactions_by_currency(transactions, selected_file)
+
+    # Фильтрация по ключевому слову
+    if (
+        get_user_choice("\nОтфильтровать список транзакций по определенному слову в описании? Да/Нет: ", ["да", "нет"])
+        == "да"
+    ):
+        keyword = input("Введите слово, по которому нужно отфильтровать: ").strip()
+        if keyword:
+            transactions = process_bank_search(transactions, keyword)
+    # Если пустой
+    if not transactions:
+        print("Не найдено ни одной транзакции, подходящей под ваши условия")
+        return
+    print("\nРаспечатываю итоговый список транзакций...")
+    display_transactions(transactions)
 
 
 if __name__ == "__main__":

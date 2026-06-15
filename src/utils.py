@@ -1,6 +1,5 @@
 import json
 import logging
-from typing import Any
 
 logger = logging.getLogger(__name__)
 file_handler = logging.FileHandler("logs/utils.log", mode="w", encoding="utf-8")
@@ -10,7 +9,7 @@ logger.addHandler(file_handler)
 logger.setLevel(logging.DEBUG)
 
 
-def json_read_from_file(filename: str) -> Any:
+def json_read_from_file(filename: str) -> list[dict]:
     """
     Считывает json файл
     :param filename: получает название файла
@@ -24,7 +23,7 @@ def json_read_from_file(filename: str) -> Any:
         with open(filename, "r", encoding="utf-8") as f:
             data = json.load(f)
             logger.info(f"Успешно считано из файла {filename}")
-            return data
+            return [item for item in data]
     except Exception as e:
         logger.error(f"Непредвиденная ошибка в json_read_from_file: {e}", exc_info=True)
     return []
