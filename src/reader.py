@@ -33,7 +33,3 @@ def excel_read(file_path: str) -> list[dict]:
     for index, row in reader.iterrows():
         data_list.append(dict(row))
     return data_list
-
-
-if __name__ == "__main__":
-    print(csv_read("./data/transactions.csv")[0].get("amount"))

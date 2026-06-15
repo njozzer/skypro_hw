@@ -2,7 +2,7 @@ from pathlib import Path
 from typing import Optional
 
 from src import filter_by_state, generators, get_date, mask_account_card, processing, reader, sort_by_date, utils
-from src.bank_operations import process_bank_operations, process_bank_search
+from src.bank_operations import process_bank_search
 
 DATA_DIR: Path = Path(__file__).resolve().parent / "data"
 FILE_PATHS: dict[str, str] = {
@@ -70,7 +70,8 @@ def get_valid_status(available_statuses: list[str]) -> Optional[str]:
 
 
 def format_amount(transaction: dict) -> str:
-    amount_data = transaction.get("operationAmount", {})
+    amount_data = transaction.get("operationAmount")
+
     if isinstance(amount_data, dict):
         amount = amount_data.get("amount", "0")
         currency_data = amount_data.get("currency", {})
@@ -83,27 +84,7 @@ def format_amount(transaction: dict) -> str:
         amount = transaction.get("amount", "0")
         currency = transaction.get("currency_code", "RUB")
 
-    currency_display_map = {
-        "AFN": "Afghani",
-        "ALL": "Lek",
-        "AMD": "Dram",
-        "AOA": "Kwanza",
-        "ARS": "Guilder",
-        "AUD": "Dollar",
-        "AZN": "Manat",
-        "ANG": "Peso",
-        "BAM": "Dollar",
-        "BBD": "Peso",
-        "BGN": "Lev",
-        "RUB": "руб.",
-        "USD": "USD",
-        "EUR": "EUR",
-        "GBP": "GBP",
-        "CNY": "Yuan",
-        "COP": "Peso",
-        "PEN": "Sol",
-    }
-    return f"{amount} {currency_display_map.get(str(currency).upper(),currency)}"
+    return f"{amount} {currency}"
 
 
 def display_format_transaction(transaction: dict) -> str:
