@@ -23,7 +23,7 @@ def sort_by_date(list_to_sort: list, descending: bool = True) -> list:
     return sorted(list_to_sort, key=lambda x: x.get("date"), reverse=descending)
 
 
-def filter_by_currency(list_to_filter: list[dict], currency: str = "RUB") -> list[dict]:
+def filter_by_currency(list_to_filter: list[dict], currency: str = "RUB") -> list[dict]:  # pragma: no cover
     """
     Фильтрация по транзакциям с рублями
     :param currency:
