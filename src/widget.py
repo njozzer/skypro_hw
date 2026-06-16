@@ -9,7 +9,6 @@ def mask_account_card(card: str) -> str:
     номер карты, и возвращает ее замаскированное значение.
     """
     if not card:
-
         raise ValueError("!Ошибка: пустая строка")
     if not isinstance(card, str):
         raise TypeError(f"!Ожидалась строка, получен {type(card).__name__}")

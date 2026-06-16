@@ -30,6 +30,7 @@ def excel_read(file_path: str) -> list[dict]:
     if not isinstance(file_path, str):
         return data_list
     reader = pd.read_excel(file_path)
+    reader = reader.fillna("")
     for index, row in reader.iterrows():
         data_list.append(dict(row))
     return data_list
